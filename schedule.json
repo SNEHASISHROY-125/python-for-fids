@@ -5,6 +5,16 @@
         "timer": 1000
     },
     {
+        "type": "info",
+        "data": {
+            "flight": "AA123",
+            "arrival": "10:00 AM",
+            "departure": "12:00 PM",
+            "status": "On Time"
+        },
+        "timer": 7000
+    },
+    {
         "type": "video",
         "data": "static/videos/video2.mp4"
     },
@@ -12,5 +22,15 @@
         "type": "image",
         "data": "static/images/image2.png",
         "timer": 5000
+    },
+    {
+        "type": "info",
+        "data": {
+            "flight": "AA123",
+            "arrival": "10:00 AM",
+            "departure": "12:00 PM",
+            "status": "On Time"
+        },
+        "timer": 7000
     }
 ]

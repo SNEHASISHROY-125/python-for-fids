@@ -30,7 +30,7 @@
                     function displayContent() {
                         contentDisplay.innerHTML = ''; // Clear previous content
                         const content = data[currentIndex];
-                        let displayDuration = content.timer || 5000; // Use the timer from the schedule or default to 5000ms
+                        let displayDuration = 5000; // Default display duration for images
 
                         if (content.type === 'image' && content.data) {
                             const img = document.createElement('img');
@@ -39,7 +39,7 @@
                         } else if (content.type === 'video' && content.data) {
                             const video = document.createElement('video');
                             video.src = content.data;
-                            video.controls = true;
+                            video.controls = false;
                             video.autoplay = true;
                             video.muted = true; // Ensure autoplay works in all browsers
                             contentDisplay.appendChild(video);
@@ -56,6 +56,79 @@
                             };
 
                             return; // Exit the function to wait for video to end
+                        } else if (content.type === 'info' && content.data) {
+                            const infoBox = document.createElement('div');
+                            infoBox.innerHTML = `
+                                <style>
+                                    .info-box {
+                                        border: 1px solid #000;
+                                        padding: 20px;
+                                        margin: 20px 0;
+                                        background-color: #f9f9f9;
+                                        font-family: Arial, sans-serif;
+                                    }
+
+                                    .info-box h2 {
+                                        margin: 0 0 10px 0;
+                                        padding: 0;
+                                        font-size: 24px;
+                                        color: #333;
+                                        text-align: center;
+                                    }
+
+                                    .info-box table {
+                                        width: 100%;
+                                        border-collapse: collapse;
+                                    }
+
+                                    .info-box th, .info-box td {
+                                        border: 1px solid #ddd;
+                                        padding: 8px;
+                                        text-align: left;
+                                    }
+
+                                    .info-box th {
+                                        background-color: #4CAF50;
+                                        color: white;
+                                        font-weight: bold;
+                                    }
+
+                                    .info-box td {
+                                        font-size: 18px;
+                                        color: #555;
+                                    }
+
+                                    .info-box tr:nth-child(even) {
+                                        background-color: #f2f2f2;
+                                    }
+
+                                    .info-box tr:hover {
+                                        background-color: #ddd;
+                                    }
+                                </style>
+                                <div class="info-box">
+                                    <h2>Flight Information</h2>
+                                    <table>
+                                        <tr>
+                                            <th>Flight</th>
+                                            <td>${content.data.flight}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Arrival</th>
+                                            <td>${content.data.arrival}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Departure</th>
+                                            <td>${content.data.departure}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td>${content.data.status}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            `;
+                            contentDisplay.appendChild(infoBox);
                         } else {
                             console.error('Unsupported content type or missing data:', content);
                         }
