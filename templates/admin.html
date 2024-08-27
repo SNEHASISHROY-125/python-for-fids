@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+    <h1>Upload Content</h1>
+    <form action="/upload_content" method="post" enctype="multipart/form-data">
+        <label for="content_id">Content ID:</label>
+        <input type="text" id="content_id" name="content_id" required><br><br>
+        <label for="file">Select file:</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <h2>Update Schedule</h2>
+    <form id="schedule-form">
+        <label for="schedule">Schedule (JSON format):</label>
+        <textarea id="schedule" name="schedule" required></textarea><br>
+        <button type="submit">Update</button>
+    </form>
+
+    <div id="uploaded-content"></div>
+
+    <script>
+        document.getElementById('content-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const contentData = {
+                content_id: document.getElementById('content_id').value,
+                content_type: document.getElementById('content_type').value,
+                content_data: document.getElementById('content_data').value
+            };
+            fetch('/upload_content', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(contentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data[contentData.content_id] && data[contentData.content_id].data) {
+                    const img = document.createElement('img');
+                    img.src = data[contentData.content_id].data;
+                    document.getElementById('uploaded-content').appendChild(img);
+                    alert('Content uploaded successfully');
+                } else {
+                    alert('Error: No image URL returned');
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading content:', error);
+                alert('Error uploading content');
+            });
+        });
+
+        document.getElementById('schedule-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            try {
+                const scheduleData = JSON.parse(document.getElementById('schedule').value);
+                fetch('/update_schedule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(scheduleData)
+                })
+                .then(response => response.json())
+                .then(data => alert('Schedule updated successfully'))
+                .catch(error => {
+                    console.error('Error updating schedule:', error);
+                    alert('Error updating schedule');
+                });
+            } catch (e) {
+                console.error('Invalid JSON format:', e);
+                alert('Invalid JSON format');
+            }
+        });
+    </script>
+</body>
+</html>

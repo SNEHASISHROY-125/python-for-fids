@@ -1,0 +1,16 @@
+[
+    {
+        "type": "image",
+        "data": "static/images/image1.png",
+        "timer": 1000
+    },
+    {
+        "type": "video",
+        "data": "static/videos/video2.mp4"
+    },
+    {
+        "type": "image",
+        "data": "static/images/image2.png",
+        "timer": 5000
+    }
+]

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Page</title>
+</head>
+<body>
+    <h1>Display Page</h1>
+    <div id="content-display"></div>
+
+    <script>
+        // Function to fetch and display content
+        function fetchAndDisplayContent() {
+            fetch('/get_schedule')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const contentDisplay = document.getElementById('content-display');
+                    contentDisplay.innerHTML = ''; // Clear previous content
+
+                    let currentIndex = 0;
+                    let timeoutId;
+
+                    // Function to display the current content
+                    function displayContent() {
+                        contentDisplay.innerHTML = ''; // Clear previous content
+                        const content = data[currentIndex];
+                        let displayDuration = content.timer || 5000; // Use the timer from the schedule or default to 5000ms
+
+                        if (content.type === 'image' && content.data) {
+                            const img = document.createElement('img');
+                            img.src = content.data;
+                            contentDisplay.appendChild(img);
+                        } else if (content.type === 'video' && content.data) {
+                            const video = document.createElement('video');
+                            video.src = content.data;
+                            video.controls = true;
+                            video.autoplay = true;
+                            video.muted = true; // Ensure autoplay works in all browsers
+                            contentDisplay.appendChild(video);
+
+                            // Set display duration to the length of the video
+                            video.onloadedmetadata = function() {
+                                displayDuration = video.duration * 1000; // Convert to milliseconds
+                            };
+
+                            // Ensure the video plays fully before switching
+                            video.onended = function() {
+                                currentIndex = (currentIndex + 1) % data.length; // Move to the next content
+                                displayContent(); // Display the next content
+                            };
+
+                            return; // Exit the function to wait for video to end
+                        } else {
+                            console.error('Unsupported content type or missing data:', content);
+                        }
+
+                        currentIndex = (currentIndex + 1) % data.length; // Move to the next content
+                        clearTimeout(timeoutId); // Clear the previous timeout
+                        timeoutId = setTimeout(displayContent, displayDuration); // Set new timeout
+                    }
+
+                    // Display the first content immediately
+                    displayContent();
+                })
+                .catch(error => {
+                    console.error('Error fetching content:', error);
+                    alert('Error fetching content: ' + error.message);
+                });
+        }
+
+        // Fetch and display content on page load
+        window.onload = fetchAndDisplayContent;
+    </script>
+</body>
+</html>
