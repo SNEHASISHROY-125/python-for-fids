@@ -30,7 +30,15 @@
                     function displayContent() {
                         contentDisplay.innerHTML = ''; // Clear previous content
                         const content = data[currentIndex];
-                        let displayDuration = 5000; // Default display duration for images
+
+                        // Skip content if 'hide' is true
+                        if (content.hide) {
+                            currentIndex = (currentIndex + 1) % data.length; // Move to the next content
+                            displayContent(); // Display the next content
+                            return; // Exit the function
+                        }
+
+                        let displayDuration = content.timer || 5000; // Use the timer from the schedule or default to 5000ms
 
                         if (content.type === 'image' && content.data) {
                             const img = document.createElement('img');
@@ -39,7 +47,7 @@
                         } else if (content.type === 'video' && content.data) {
                             const video = document.createElement('video');
                             video.src = content.data;
-                            video.controls = false;
+                            video.controls = true;
                             video.autoplay = true;
                             video.muted = true; // Ensure autoplay works in all browsers
                             contentDisplay.appendChild(video);
@@ -106,27 +114,30 @@
                                         background-color: #ddd;
                                     }
                                 </style>
-                                <div class="info-box">
-                                    <h2>Flight Information</h2>
-                                    <table>
-                                        <tr>
-                                            <th>Flight</th>
-                                            <td>${content.data.flight}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Arrival</th>
-                                            <td>${content.data.arrival}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Departure</th>
-                                            <td>${content.data.departure}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Status</th>
-                                            <td>${content.data.status}</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                    <div class="info-box">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Logo</th>
+                                                    <th>Flight</th>
+                                                    <th>Arrival</th>
+                                                    <th>Departure</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${data.filter(flight => flight.data && flight.data.flight && flight.data.arrival && flight.data.departure && flight.data.status).map(flight => `
+                                                    <tr>
+                                                        <td><img src="${flight.data.logo}" alt="Flight Logo" width="50" height="50"></td>
+                                                        <td>${flight.data.flight}</td>
+                                                        <td>${flight.data.arrival}</td>
+                                                        <td>${flight.data.departure}</td>
+                                                        <td>${flight.data.status}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
                             `;
                             contentDisplay.appendChild(infoBox);
                         } else {

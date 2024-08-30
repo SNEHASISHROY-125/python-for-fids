@@ -2,35 +2,30 @@
     {
         "type": "image",
         "data": "static/images/image1.png",
-        "timer": 1000
+        "timer": 1000,
+        "hide": false
     },
     {
         "type": "info",
         "data": {
+            "logo": "static/images/indigo-logo.png",
             "flight": "AA123",
             "arrival": "10:00 AM",
             "departure": "12:00 PM",
             "status": "On Time"
         },
-        "timer": 7000
+        "timer": 7000,
+        "hide": false
     },
     {
         "type": "video",
-        "data": "static/videos/video2.mp4"
+        "data": "static/videos/video3.mp4",
+        "hide": true
     },
     {
         "type": "image",
         "data": "static/images/image2.png",
-        "timer": 5000
-    },
-    {
-        "type": "info",
-        "data": {
-            "flight": "AA123",
-            "arrival": "10:00 AM",
-            "departure": "12:00 PM",
-            "status": "On Time"
-        },
-        "timer": 7000
+        "timer": 5000,
+        "hide": false
     }
 ]
