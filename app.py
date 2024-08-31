@@ -20,7 +20,7 @@ def display_page():
 
 if __name__ == '__main__':
     # Replace '192.168.1.100' with your actual local IP address
-    app.run(host='192.168.1.3', port=5000, debug=True)
+    app.run(host='192.168.1.2', port=5000, debug=True)
 
 
 

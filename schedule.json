@@ -7,13 +7,36 @@
     },
     {
         "type": "info",
-        "data": {
-            "logo": "static/images/indigo-logo.png",
-            "flight": "AA123",
-            "arrival": "10:00 AM",
-            "departure": "12:00 PM",
-            "status": "On Time"
-        },
+        "data": [
+            {
+                "logo": "static/images/indigo-logo.png",
+                "flight": "AA123",
+                "arrival": "10:00 AM",
+                "departure": "12:00 PM",
+                "status": "On Time"
+            },
+            {
+                "logo": "static/images/delta-logo.png",
+                "flight": "DL456",
+                "arrival": "11:00 AM",
+                "departure": "1:00 PM",
+                "status": "Delayed"
+            },
+            {
+                "logo": "static/images/Vistara-logo.jpg",
+                "flight": "VSL456",
+                "arrival": "11:00 AM",
+                "departure": "1:00 PM",
+                "status": "Delayed"
+            },
+            {
+                "logo": "static/images/VIRGIN-ATLANTIC-logo.jpg",
+                "flight": "DL456",
+                "arrival": "11:00 AM",
+                "departure": "1:00 PM",
+                "status": "Delayed"
+            }
+    ],
         "timer": 7000,
         "hide": false
     },

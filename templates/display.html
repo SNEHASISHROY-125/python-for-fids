@@ -126,13 +126,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                ${data.filter(flight => flight.data && flight.data.flight && flight.data.arrival && flight.data.departure && flight.data.status).map(flight => `
+                                                ${content.data.filter(flight => flight.logo && flight.flight && flight.arrival && flight.departure && flight.status).map(flight => `
                                                     <tr>
-                                                        <td><img src="${flight.data.logo}" alt="Flight Logo" width="50" height="50"></td>
-                                                        <td>${flight.data.flight}</td>
-                                                        <td>${flight.data.arrival}</td>
-                                                        <td>${flight.data.departure}</td>
-                                                        <td>${flight.data.status}</td>
+                                                        <td><img src="${flight.logo}" alt="Flight Logo" width="50" height="50"></td>
+                                                        <td>${flight.flight}</td>
+                                                        <td>${flight.arrival}</td>
+                                                        <td>${flight.departure}</td>
+                                                        <td>${flight.status}</td>
                                                     </tr>
                                                 `).join('')}
                                             </tbody>
