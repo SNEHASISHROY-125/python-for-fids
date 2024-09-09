@@ -4,3 +4,6 @@
 *.jpg
 *.txt
 /__pycache__/
+test.py
+/mongo
+control.py
